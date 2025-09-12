@@ -2,6 +2,7 @@ import styles from '../styles/gasto.module.css';
 import { Link } from "react-router-dom";
 import { useState, useRef } from 'react';
 import CountUp from 'react-countup';
+import { ChevronsLeft } from "lucide-react";
 
 export default function Gasto(){
 
@@ -42,6 +43,8 @@ export default function Gasto(){
     return(
 
         <section className={styles['gasto-section']}>
+
+            <Link to="/" className={styles['page-back-link']}><ChevronsLeft className={styles.icon}/> Voltar</Link>
 
             <h1 className={styles['gasto-total']}> 
                 <CountUp 
