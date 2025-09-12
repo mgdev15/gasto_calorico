@@ -2,37 +2,44 @@ import { lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageWrapper from "../wrapper/PageWrapper";
+import { createContext, useState } from "react";
 
 const Home = lazy(() => import('../pages/Home'));
 const Gasto = lazy(() => import('../pages/Gasto'));
+export const GenderContext = createContext();
 
 export default function Router(){
 
     const location = useLocation();
+    const [gender, setGender] = useState(null);
 
     return(
 
         <AnimatePresence mode="wait">
 
-            <Routes location={location} key={location.pathname}>
+            <GenderContext.Provider value={{ gender, setGender }}>
 
-                <Route path="/" 
-                    element={
-                        <PageWrapper>
-                            <Home />
-                        </PageWrapper>
-                    } 
-                />
+                <Routes location={location} key={location.pathname}>
 
-                <Route path="/gasto-calorico" 
-                    element={
-                        <PageWrapper>
-                            <Gasto />
-                        </PageWrapper>
-                    } 
-                />
+                    <Route path="/" 
+                        element={
+                            <PageWrapper>
+                                <Home />
+                            </PageWrapper>
+                        } 
+                    />
 
-            </Routes>
+                    <Route path="/gasto-calorico" 
+                        element={
+                            <PageWrapper>
+                                <Gasto />
+                            </PageWrapper>
+                        } 
+                    />
+
+                </Routes>
+
+            </GenderContext.Provider>
 
         </AnimatePresence>
 
