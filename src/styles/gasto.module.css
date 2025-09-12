@@ -63,6 +63,10 @@
     padding: 8px;
 }
 
+.page-back-link:hover{
+    color: hsl(0, 0%, 47%);
+}
+
 .page-back-link .icon{
     flex-shrink: 0;
 }

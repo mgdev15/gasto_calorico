@@ -17,7 +17,7 @@
 .select-gender-title{
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 50px;
+    margin-bottom: 45px;
     font-size: 1.7rem;
 }
 
@@ -50,13 +50,18 @@
     pointer-events: none;
     border-radius: 5px;
     z-index: -1;
+    scale: 1.015;
+    animation: borderSpin 2.5s linear infinite;
+}
+
+.male-card .before-card{
     background-image: conic-gradient(
         from var(--angle),
         hsl(27, 100%, 64%), 
         hsl(34, 100%, 67%), 
         hsl(41, 100%, 70%), 
         hsl(280, 100%, 70%), 
-        hsl(260, 100%, 70%), 
+        hsl(135, 100%, 70%), 
         hsl(221, 100%, 72%),
         hsl(210, 100%, 70%), 
         hsl(216, 100%, 67%), 
@@ -65,8 +70,24 @@
         hsl(41, 100%, 68%), 
         hsl(27, 100%, 64%)
     );
-    scale: 1.015;
-    animation: borderSpin 2.5s linear infinite;
+}
+
+.female-card .before-card{
+        background-image: conic-gradient(
+        from var(--angle),
+        hsl(103, 100%, 74%), 
+        hsl(34, 100%, 73%), 
+        hsl(14, 100%, 70%), 
+        hsl(276, 100%, 76%), 
+        hsl(260, 100%, 70%), 
+        hsl(27, 100%, 72%),
+        hsl(180, 100%, 78%), 
+        hsl(216, 100%, 67%), 
+        hsl(207, 100%, 76%), 
+        hsl(256, 100%, 81%), 
+        hsl(41, 100%, 68%), 
+        hsl(103, 100%, 74%)
+    );
 }
 
 .male-card:hover{

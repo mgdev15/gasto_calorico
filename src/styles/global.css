@@ -10,6 +10,10 @@ body, html{
     scroll-behavior: smooth;
 }
 
+html{
+    scrollbar-color: rgb(255, 187, 0) black;
+}
+
 body{
     font-family: 'Inter', 'DM Sans', 'Red Hat Display', sans-serif;
 }
