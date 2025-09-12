@@ -1,13 +1,20 @@
 import styles from '../styles/home.module.css';
 import ManProfilePic from "../assets/man_photo.svg";
 import WomanProfilePic from "../assets/woman_photo.svg";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { GenderContext } from '../router/Router';
 import { Link } from "react-router-dom";
 
 export default function Home(){
 
     const [isManHovering, setIsManHovering] = useState(false);
     const [isWomanHovering, setIsWomanHovering] = useState(false);
+    const { setGender } = useContext(GenderContext);
+
+    function handleGender(gender){
+        setGender(gender);
+        console.log(gender);
+    }
     
     return(
 
@@ -20,7 +27,8 @@ export default function Home(){
             <div className={styles['gender-cards']}>
 
                 <Link to="/gasto-calorico">
-                    <div className={styles['male-card']} 
+                    <div className={styles['male-card']}
+                    onClick={() => handleGender("Homem")} 
                     onMouseEnter={() => setIsManHovering(true)} 
                     onMouseLeave={() => setIsManHovering(false)}>
                         <div className={`${styles['before-card']} ${isManHovering ? styles.vanish : ""}`} />
@@ -30,7 +38,8 @@ export default function Home(){
                 </Link>
 
                 <Link to="/gasto-calorico">
-                    <div className={styles['female-card']} 
+                    <div className={styles['female-card']}
+                    onClick={() => handleGender("Mulher")}
                     onMouseEnter={() => setIsWomanHovering(true)} 
                     onMouseLeave={() => setIsWomanHovering(false)}>
                         <div className={`${styles['before-card']} ${isWomanHovering ? styles.vanish : ""}`} />
