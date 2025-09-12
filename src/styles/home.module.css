@@ -1,0 +1,94 @@
+@property --angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.home-title{
+    text-align: center;
+    margin-top: 50px;
+    padding: 0px 30px;
+}
+
+.home-title span{
+    color: hsl(39, 100%, 47%);
+}
+
+.select-gender-title{
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    font-size: 1.7rem;
+}
+
+.gender-cards{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 80px;
+    padding: 0px 30px;
+}
+
+.gender-cards img{
+    width: 145px;
+}
+
+.male-card, .female-card{
+    text-align: center;
+    padding: 70px;
+    position: relative;
+    transition: box-shadow .2s ease, border .2s ease;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.male-card .before-card, .female-card .before-card{
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    border-radius: 5px;
+    z-index: -1;
+    background-image: conic-gradient(
+        from var(--angle),
+        hsl(27, 100%, 64%), 
+        hsl(34, 100%, 67%), 
+        hsl(41, 100%, 70%), 
+        hsl(280, 100%, 70%), 
+        hsl(260, 100%, 70%), 
+        hsl(221, 100%, 72%),
+        hsl(210, 100%, 70%), 
+        hsl(216, 100%, 67%), 
+        hsl(225, 100%, 76%), 
+        hsl(270, 100%, 73%), 
+        hsl(41, 100%, 68%), 
+        hsl(27, 100%, 64%)
+    );
+    scale: 1.015;
+    animation: borderSpin 2.5s linear infinite;
+}
+
+.male-card:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 35px hsla(216, 100%, 50%, 0.849);
+}
+
+.female-card:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 35px hsla(323, 100%, 50%, 0.651);
+}
+
+.vanish{
+    display: none;
+}
+
+.male-card h3, .female-card h3{
+    font-size: 1.4rem;
+    margin-top: 30px;
+    font-family: 'DM Sans';
+    color: black;
+}
+
+@keyframes borderSpin{
+    to{--angle: 360deg}
+}
