@@ -27,6 +27,7 @@
     flex-wrap: wrap;
     gap: 80px;
     padding: 0px 30px;
+    margin-bottom: 50px;
 }
 
 .gender-cards img{
