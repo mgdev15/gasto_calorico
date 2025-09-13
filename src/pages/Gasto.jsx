@@ -1,6 +1,6 @@
 import styles from '../styles/gasto.module.css';
-import { Link } from "react-router-dom";
-import { useState, useRef } from 'react';
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from 'react';
 import CountUp from 'react-countup';
 import { ChevronsLeft } from "lucide-react";
 
@@ -10,6 +10,17 @@ export default function Gasto(){
     const pesoRef = useRef(null);
     const veloRef = useRef(null);
     const [kcal, setKcal] = useState((0).toFixed(1));
+    const [ searchParams ] = useSearchParams();
+    const gender = searchParams.get("gender");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        if(gender !== "homem" && gender !== "mulher"){
+            navigate("/", { replace: true });
+        }
+
+    }, [gender, navigate]);
 
     function obterCalorias(tempo, peso, velocidade){
 
@@ -32,7 +43,7 @@ export default function Gasto(){
         const keyPressed = event.key.toLowerCase();
         if(keyPressed === "enter"){
             obterCalorias(
-                tempoRef.current.value, 
+                tempoRef.current.value,
                 pesoRef.current.value, 
                 veloRef.current.value
             );
@@ -58,17 +69,17 @@ export default function Gasto(){
             <div className={styles['inputs-container']}>
 
                 <div className={styles['tempo-input']}>
-                    <input type="number" ref={tempoRef} />
+                    <input type="number" ref={tempoRef} id="tempoInput" />
                     <h3>Tempo (min)</h3>
                 </div>
 
                 <div className={styles['peso-input']}>
-                    <input type="number" ref={pesoRef} />
+                    <input type="number" ref={pesoRef} id="pesoInput" />
                     <h3>Seu Peso (kg)</h3>
                 </div>
 
                 <div className={styles['velo-input']}>
-                    <input type="number" ref={veloRef} />
+                    <input type="number" ref={veloRef} id="veloInput" />
                     <h3>Velocidade (km/h)</h3>
                 </div>
 
