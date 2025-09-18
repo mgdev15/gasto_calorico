@@ -3,6 +3,7 @@ import ManProfilePic from "../assets/man_photo.svg";
 import WomanProfilePic from "../assets/woman_photo.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Typewriter } from 'react-simple-typewriter';
 
 export default function Home(){
 
@@ -13,7 +14,16 @@ export default function Home(){
 
         <main>
             
-            <h1 className={styles['home-title']}>Descubra o seu gasto calórico <span>pós-esteira</span>!</h1>
+            <h1 className={styles['home-title']}>Descubra o seu gasto calórico
+                <span> pós-
+                    <Typewriter 
+                        words={['caminhada', 'corrida', 'esteira']}
+                        loop={0}
+                        typeSpeed={70}
+                        deleteSpeed={100}
+                        delaySpeed={800}
+                    />
+                </span>!</h1>
 
             <h2 className={styles['select-gender-title']}>Selecione o seu gênero:</h2>
 

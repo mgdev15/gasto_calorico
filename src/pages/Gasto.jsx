@@ -9,6 +9,7 @@ export default function Gasto(){
     const tempoRef = useRef(null);
     const pesoRef = useRef(null);
     const veloRef = useRef(null);
+    const alturaRef = useRef(null);
     const [kcal, setKcal] = useState((0).toFixed(1));
     const [ searchParams ] = useSearchParams();
     const gender = searchParams.get("gender");
@@ -16,35 +17,61 @@ export default function Gasto(){
 
     useEffect(() => {
 
-        if(gender !== "homem" && gender !== "mulher"){
+        if(gender !== "homem" && gender !== "mulher"){ /* Identifica gênero do usuário */
             navigate("/", { replace: true });
         }
 
     }, [gender, navigate]);
 
-    function obterCalorias(tempo, peso, velocidade){
+    function obterCalorias(tempo, peso, altura, velocidade){
 
-        if(tempo < 1 || peso < 1 || velocidade < 0){
-            setKcal((0).toFixed(1));
+        if(
+            tempo < 1 || tempo > 11000 || 
+            peso < 1 || peso > 600 ||
+            velocidade <= 0 || velocidade > 50 || 
+            altura < 60 || altura > 250
+        ){
+            setKcal((0).toFixed(1)); /* Seta limites para os campos de entrada de valores */
             return;
         }
 
-        const veloMetroPorMin = (velocidade * 1000) / 60;
-        const volumeOxigenio = (0.1 * veloMetroPorMin) + 3.5;
-        const kcalPorMin = (volumeOxigenio * peso / 1000) * 5;
-        const kcalTotal = `${(kcalPorMin * tempo).toFixed(1)}`;
+        let LBM = 0; /* Massa magra do indivíduo */
+        let volumeOxigenio = 0; /* Volume de oxigênio (VO₂) gasto */
+        const veloMetroPorMin = (velocidade * 1000) / 60; /* Velocidade em m/min */
+
+        if(gender === "homem"){
+            LBM = 0.407 * peso + 0.267 * altura - 19.2; /* LBM masculina */
+        } else{
+            LBM = 0.252 * peso + 0.473 * altura - 48.3 /* LBM feminina */
+        }
+
+        if(velocidade < 6.4){ /* Gasto em CAMINHADA LENTA */
+            volumeOxigenio = (0.1 * veloMetroPorMin) + 3.5;
+        }
+        else if(velocidade >= 6.4 && velocidade < 8){ /* Gasto em CAMINHADA RÁPIDA */
+            volumeOxigenio = (0.15 * veloMetroPorMin) + 3.5;
+        }
+        else if(velocidade >= 8){ /* Gasto em CORRIDA */
+            volumeOxigenio = (0.2 * veloMetroPorMin) + 3.5;
+        }
+
+        const kcalPorMin = (volumeOxigenio * peso / 1000) * 5; /* Calorias p/min */
+        const kcalACSM = kcalPorMin * tempo; /* Calorias totais (despreza gênero e altura) */
+
+        const kcalTotal = kcalACSM * (0.45 * LBM/peso + 0.55); /* Calorias totais com LBM, gênero e altura contabilizados*/
 
         setKcal(kcalTotal);
 
     }
 
-    document.addEventListener("keydown", event => {
+    document.addEventListener("keydown", event => { /* Eventos do teclado (enter) */
 
         const keyPressed = event.key.toLowerCase();
         if(keyPressed === "enter"){
             obterCalorias(
                 tempoRef.current.value,
-                pesoRef.current.value, 
+                pesoRef.current.value,
+                alturaRef.current.value,
                 veloRef.current.value
             );
         }
@@ -79,8 +106,13 @@ export default function Gasto(){
                 </div>
 
                 <div className={styles['velo-input']}>
-                    <input type="number" ref={veloRef} id="veloInput" />
+                    <input type="number" defaultValue={4.5} ref={veloRef} id="veloInput" /> {/* Valor médio por adulto*/}
                     <h3>Velocidade (km/h)</h3>
+                </div>
+
+                <div className={styles['altura-input']}>
+                    <input type="number" ref={alturaRef} id="alturaInput" />
+                    <h3>Altura (cm)</h3>
                 </div>
 
             </div>
@@ -89,7 +121,8 @@ export default function Gasto(){
             onClick={() => {
                 obterCalorias(
                     tempoRef.current.value, 
-                    pesoRef.current.value, 
+                    pesoRef.current.value,
+                    alturaRef.current.value, 
                     veloRef.current.value
                 );
                 window.scrollTo(0, 0);
