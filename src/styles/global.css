@@ -11,7 +11,7 @@ body, html{
 }
 
 html{
-    scrollbar-color: rgb(255, 187, 0) black;
+    scrollbar-color: hsl(44, 100%, 50%) black;
 }
 
 body{

@@ -114,3 +114,27 @@
 @keyframes borderSpin{
     to{--angle: 360deg}
 }
+
+@media screen and (max-width: 550px){
+    
+    .home-title{
+        font-size: 1.7rem;
+    }
+
+    .select-gender-title{
+        font-size: 1.45rem;
+    }
+
+    .gender-cards img{
+        width: 125px;
+    }
+
+    .male-card, .female-card{
+        padding: 50px;
+    }
+
+    .male-card h3, .female-card h3{
+        font-size: 1.25rem;
+    }
+
+}
