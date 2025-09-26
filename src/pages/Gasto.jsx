@@ -1,8 +1,10 @@
 import styles from '../styles/gasto.module.css';
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from 'react';
-import CountUp from 'react-countup';
+import CountUp from 'react-countup'; /* Lib para animação */
+import html2canvas from "html2canvas"; /* Lib para compartilhar arquivos */
 import { ChevronsLeft } from "lucide-react";
+import { FaShare } from "react-icons/fa";
 
 export default function Gasto(){
 
@@ -10,6 +12,7 @@ export default function Gasto(){
     const pesoRef = useRef(null);
     const veloRef = useRef(null);
     const alturaRef = useRef(null);
+    const resultadoRef = useRef(null);
     const [kcal, setKcal] = useState((0).toFixed(1));
     const [ searchParams ] = useSearchParams();
     const gender = searchParams.get("gender");
@@ -22,6 +25,50 @@ export default function Gasto(){
         }
 
     }, [gender, navigate]);
+
+    async function capturarTela(){ /* Função para tirar print da tela */
+
+        const elemento = resultadoRef.current;
+        if(!elemento) return;
+
+        const canvas = await html2canvas(elemento);
+        const dataURL = canvas.toDataURL("image/png");
+
+        const link = document.createElement("a");
+        link.href = dataURL;
+        link.download = "resultado_treino.png";
+        link.click();
+
+    }
+
+    async function compartilhar(){ /* Algoritmo para compartilhar o resultado */
+ 
+        const elemento = resultadoRef.current;
+        if(!elemento) return;
+
+        const canvas = await html2canvas(elemento);
+        const dataURL = canvas.toDataURL("image/png"); /* Transforma imagem em binário */
+
+        const response = await fetch(dataURL);
+        const blob = await response.blob(); /* Coleta dados brutos da foto */
+
+        const novoArquivo = new File([blob], "resultado_treino.png", { type: "image/png" });
+        /* Cria uma imagem com os dados fornecidos */
+
+        if(navigator.canShare && navigator.canShare({ files: [novoArquivo]})){
+            try{
+                await navigator.share({
+                    files: [novoArquivo] /* Libera o compartilhamento da imagem ao usuário */
+                });
+            } catch(err) {
+                console.log("Erro ao compartilhar arquivos: ", err);
+            }
+        }
+        else{
+            alert("O compartilhamento de arquivos não é suportado nesse dispositivo.");
+        }
+
+    }
 
     function obterCalorias(tempo, peso, altura, velocidade){
 
@@ -84,14 +131,19 @@ export default function Gasto(){
 
             <Link to="/" className={styles['page-back-link']}><ChevronsLeft className={styles.icon}/> Voltar</Link>
 
-            <h1 className={styles['gasto-total']}> 
-                <CountUp 
-                start={0}
-                end={parseFloat(kcal)}
-                duration={3}
-                decimals={1} /> kcal
-            </h1>
-            <h2 className={styles['gasto-subtitle']}>Gastas no seu treino!</h2>
+            <div className={styles['gasto-total-container']} ref={resultadoRef}>
+
+                <h1 className={styles['gasto-total']}> 
+                    <CountUp 
+                    start={0}
+                    end={parseFloat(kcal)}
+                    duration={3}
+                    decimals={1} /> kcal
+                </h1>
+
+                <h2 className={styles['gasto-subtitle']}>Gastas no seu treino!</h2>
+
+            </div>
 
             <div className={styles['inputs-container']}>
 
@@ -128,6 +180,8 @@ export default function Gasto(){
                 window.scrollTo(0, 0);
             }}
             >Obter calorias</button>
+
+            <button className={styles['share-btn']} onClick={() => {capturarTela(), compartilhar()}}>Compartilhar resultado <FaShare /></button>
 
         </section>
 
