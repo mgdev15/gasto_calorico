@@ -46,18 +46,39 @@
 
 .calc-btn{
     background-image: linear-gradient(135deg, hsl(34, 100%, 50%), hsl(44, 100%, 49%));
-    margin: 55px 0;
+    margin: 55px auto 20px auto;
     border: none;
     border-radius: 999px;
     padding: 13px 60px;
     font-size: 1.1rem;
     font-family: 'Red Hat Display';
     font-weight: bold;
+    display: block;
 }
 
 .calc-btn:hover{
     cursor: pointer;
     background-image: linear-gradient(135deg, hsl(34, 100%, 74%), hsl(44, 100%, 76%));
+}
+
+.share-btn{
+    background-image: linear-gradient(135deg, hsl(194, 100%, 61%), hsl(199, 100%, 51%));
+    margin: 0 auto 50px auto;
+    border: none;
+    border-radius: 999px;
+    padding: 13px 20px;
+    font-size: 1.1rem;
+    font-family: 'Red Hat Display';
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.share-btn:hover{
+    cursor: pointer;
+    background-image: linear-gradient(135deg, hsl(194, 100%, 85%), hsl(199, 100%, 82%));
 }
 
 .page-back-link{

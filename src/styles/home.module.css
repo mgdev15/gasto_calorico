@@ -4,6 +4,20 @@
     inherits: false;
 }
 
+main{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.logo-muri{
+    width: 150px;
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    display: block;
+}
+
 .home-title{
     text-align: center;
     margin-top: 50px;
@@ -25,7 +39,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 80px;
+    gap: 65px;
     padding: 0px 30px;
     margin-bottom: 50px;
 }
@@ -111,8 +125,34 @@
     color: black;
 }
 
+footer{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: rgba(68, 68, 68, 0.295);
+    padding: 30px;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+footer span{
+    padding: 1px 3px;
+    border-radius: 5px;
+    background-color: rgb(255, 229, 82);
+}
+
 @keyframes borderSpin{
     to{--angle: 360deg}
+}
+
+@media screen and (max-width: 1150px){
+    .logo-muri{
+        position: relative;
+        top: 30px;
+        left: -1px;
+        margin: auto;
+    }
 }
 
 @media screen and (max-width: 550px){
